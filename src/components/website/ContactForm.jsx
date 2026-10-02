@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Send, CheckCircle, Loader2 } from 'lucide-react';
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import { verifyRecaptcha } from '@/lib/actions/verify-recaptcha';
+import { trackGenerateLead } from '@/lib/analytics/data-layer';
 
 export default function ContactForm({ courses = [] }) {
   const [formData, setFormData] = useState({
@@ -42,6 +43,11 @@ export default function ContactForm({ courses = [] }) {
 
       // Simulate API call / save to Supabase
       await new Promise((resolve) => setTimeout(resolve, 800));
+      trackGenerateLead({
+        formName: 'contact_enquiry',
+        course: formData.course,
+        hasEmail: Boolean(formData.email),
+      });
       setSubmitting(false);
       setSubmitted(true);
     } catch (error) {
@@ -133,7 +139,11 @@ export default function ContactForm({ courses = [] }) {
         Fill out the form below and our Nashik counseling team will call you back.
       </p>
 
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+      <form
+        onSubmit={handleSubmit}
+        data-analytics-form="contact_enquiry"
+        style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}
+      >
         <div>
           <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 600, color: '#374151', marginBottom: '0.35rem' }}>
             Full Name *

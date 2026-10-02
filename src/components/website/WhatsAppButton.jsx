@@ -14,6 +14,7 @@ export default function WhatsAppButton({ phoneNumber = "919325589491" }) {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat on WhatsApp"
+      data-analytics-placement="floating_button"
       style={{
         position: "fixed",
         bottom: "1.5rem",

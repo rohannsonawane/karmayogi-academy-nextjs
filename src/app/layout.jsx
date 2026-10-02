@@ -1,6 +1,11 @@
 
 import { Inter, Playfair_Display } from 'next/font/google';
 import { Toaster } from 'react-hot-toast';
+import {
+  GoogleAnalytics,
+  GoogleTagManagerBody,
+  GoogleTagManagerHead,
+} from '@/components/analytics/GoogleTagManager';
 import './globals.css';
 
 const inter = Inter({
@@ -55,6 +60,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
       <body className={inter.className}>
+        <GoogleTagManagerHead />
+        <GoogleAnalytics />
+        <GoogleTagManagerBody />
         {children}
         <Toaster
           position="top-right"
